@@ -16,25 +16,36 @@ import lombok.ToString;
 @AllArgsConstructor
 public class ApiResultModel {
 
-    private CODE code;
+    private int code;
     private Object data;
-    private int count;
+    private boolean success;
+    private String msg;
+
+    public void setCode(CODE code){
+        this.code = code.getCode();
+        this.msg = code.getMsg();
+    }
+    public ApiResultModel(String msg, Object data) {
+        super();
+        this.data = data;
+        this.success = true;
+        this.code = CODE.SUCCESS.getCode();
+        this.msg = CODE.SUCCESS.getMsg();
+    }
 
     public ApiResultModel(Object data) {
         super();
         this.data = data;
-        this.code = CODE.SUCCESS;
+        this.success = true;
+        this.code = CODE.SUCCESS.getCode();
+        this.msg = CODE.SUCCESS.getMsg();
     }
+
     public ApiResultModel(Object data, CODE errorCode) {
         super();
         this.data = data;
-        this.code = errorCode;
+        this.success = false;
+        this.code = CODE.SUCCESS.getCode();
+        this.msg = CODE.SUCCESS.getMsg();
     }
-    public ApiResultModel(Object data, int count, CODE code) {
-        super();
-        this.data = data;
-        this.code = code;
-        this.count = count;
-    }
-
 }
